@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 public class HelloSillotController {
 
@@ -14,6 +16,7 @@ public class HelloSillotController {
     public String registerCall()
     {
         sillotService.setLastTime();
+        sillotService.setNotificationsActive(true);
         String result = sillotService.getLastTime().toString();
         return result;
     }
@@ -21,7 +24,12 @@ public class HelloSillotController {
     @RequestMapping("/raspberry/lastTime")
     public String GetLastTime()
     {
-        String result = sillotService.getLastTime().toString();
+        String result ="";
+        LocalDateTime time = sillotService.getLastTime();
+        if (time!=null)
+            result = sillotService.getLastTime().toString();
+        else
+            result = "null";
         return result;
     }
 

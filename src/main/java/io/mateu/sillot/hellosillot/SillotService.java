@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 public class SillotService {
 
     private LocalDateTime lastTime;
+    private boolean notificationsActive = true;
+
+
 
     public LocalDateTime getLastTime()
     {
@@ -17,5 +20,28 @@ public class SillotService {
     public void setLastTime()
     {
         lastTime = LocalDateTime.now();
+    }
+
+    public void setLastTime( LocalDateTime time)
+    {
+        lastTime = time;
+    }
+
+    public boolean checkNotification()
+    {
+        boolean notify = false;
+        LocalDateTime lastTime= getLastTime();
+        LocalDateTime hace5Minutos = LocalDateTime.now().minusMinutes(5);
+        if (lastTime==null) notify = true;
+        else if (lastTime.isBefore(hace5Minutos))  notify=true;
+        return notify;
+    }
+
+    public boolean isNotificationsActive() {
+        return notificationsActive;
+    }
+
+    public void setNotificationsActive(boolean notificationsActive) {
+        this.notificationsActive = notificationsActive;
     }
 }
